@@ -148,7 +148,7 @@ h2o.confusionMatrix(perf_nbs_tf)
 
 ```{r}
 #xgboost - tf
-genres_xgboost_tf <- h2o.xgboost(y = "label", training_frame = genres_train_tf.hex, nfolds = 5, seed = 1234)
+genres_xgboost_tf <- h2o.xgboost(y = "label", training_frame = genres_train_tf.hex, nfolds = 10)
 
 genres_xgboost_tf
 ```
@@ -197,8 +197,7 @@ h2o.confusionMatrix(perf_drf_reg)
 ```
 ```{r}
 #xgboost - reg
-genres_xgboost_reg <- h2o.xgboost(y = "label", training_frame = genres_train_reg.hex, nfolds = 10, seed = 1234)
-
+genres_xgboost_reg <- h2o.xgboost(y = "label", training_frame = genres_train_reg.hex)
 genres_xgboost_reg
 ```
 
@@ -278,8 +277,29 @@ plot(genres_dl_reg_m2)
 #performance deep learning - reg
 perf_dl_reg_m2 <- h2o.performance(genres_dl_reg_m2,newdata = genres_test_reg.hex)
 
-h2o.confusionMatrix(genres_dl_reg_m2)
+h2o.confusionMatrix(perf_dl_reg_m2)
 
-# 3% error - Best so far! 
+# 13.85% error 
+```
+
+```{r}
+#Deep learning - Reg-3
+genres_dl_reg_m3 <- h2o.deeplearning(y = "label", training_frame = genres_train_reg.hex, nfolds = 10, epochs = 30)
+
+genres_dl_reg_m3
+
+```
+```{r}
+#plotting
+plot(genres_dl_reg_m3)
+
+```
+
+```{r}
+#performance deep learning - reg
+perf_dl_reg_m3 <- h2o.performance(genres_dl_reg_m3,newdata = genres_test_reg.hex)
+
+h2o.confusionMatrix(perf_dl_reg_m3)
+#Error of 11% <- Best so far! 
 ```
 
